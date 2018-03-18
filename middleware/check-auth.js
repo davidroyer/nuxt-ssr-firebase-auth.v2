@@ -1,4 +1,5 @@
 import jwtDecode from 'jwt-decode'
+var cookieparser = require('cookieparser')
 
 export default function ({store, req}) {
   if (process.server && !store.getters['modules/user/isAuthenticated']) {
@@ -9,23 +10,22 @@ export default function ({store, req}) {
       store.dispatch('modules/user/saveUSER', {name: user.name, email: user.email, avatar: user.picture, uid: user.user_id})
       store.dispatch('modules/user/saveUID', user.user_id)
     }
-
   }
 }
 
 function getUserFromCookie (req) {
-  console.log('[CHECK-AUTH] - checking if user is stored in cookie')
   if (!req.headers.cookie) return
 
-  const accessTokenCookie = req.headers.cookie.split(';').find(c => c.trim().startsWith('access_token='))
-  if (!accessTokenCookie) return
+  if (req.headers.cookie) {
+    const parsed = cookieparser.parse(req.headers.cookie)
+    const accessTokenCookie = parsed.access_token
+    if (!accessTokenCookie) return
 
-  // https://firebase.google.com/docs/auth/admin/verify-id-tokens
-  const accessToken = accessTokenCookie.split('=')[1]
-  const decodedToken = jwtDecode(accessToken)
-  if (!decodedToken) return
+    const decodedToken = jwtDecode(accessTokenCookie)
+    if (!decodedToken) return
 
-  return decodedToken
+    return decodedToken
+  }
 }
 
 function getUserFromSession (req) {

@@ -13,8 +13,6 @@ router.use((req, res, next) => {
 })
 
 router.post('/login', (req, res) => {
-  // console.log('[API] - LOGIN POST', req.headers, req.body.uid)
-  console.log('REQ BODYYY: ', req.body);
   req.session.userId = req.body.uid
   res.cookie('access_token',req.body.token, { maxAge: 3600000, httpOnly: true }) /* 1 hour */
   return res.json( { status: 'success' })

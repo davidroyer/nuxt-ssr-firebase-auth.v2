@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div>
       <nuxt-link to="/">Home</nuxt-link>
       <a href='#' @click="signout">Logout</a>
@@ -17,12 +17,15 @@
     middleware: 'authenticated',
     methods: {
       ...mapActions('modules/user', [ 'logout' ]),
-      signout () {
-        this.logout().then(() => {
-          this.$router.push('/')
-        }).catch((error) => {
-          console.log(error.message)
-        })
+      async signout () {
+        await this.logout()
+        this.$router.push('/')
+
+        // this.logout().then(() => {
+        //   this.$router.push('/')
+        // }).catch((error) => {
+        //   console.log(error.message)
+        // })
       }
     }
   }

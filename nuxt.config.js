@@ -13,7 +13,10 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js and Firebase Authentication Example Application' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic' },
+      { rel: 'stylesheet', href: 'https://cdn.rawgit.com/necolas/normalize.css/master/normalize.css' },
+      { rel: 'stylesheet', href: 'https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css' }
     ]
   },
   env: {
@@ -24,6 +27,11 @@ module.exports = {
       SENDER_ID: '662037186260'
     }
   },
+
+  layoutTransition: {
+    name: 'layout',
+    mode: 'out-in'
+  },
   /*
   ** Customize the progress bar color
   */
@@ -31,10 +39,22 @@ module.exports = {
   /*
   ** Build configuration
   */
+  // css: [
+  //   '@/assets/styles/main.css'
+  // ],
   build: {
     /*
     ** Run ESLint on save
     */
+    postcss: {
+      plugins: {
+        'postcss-cssnext': {
+          features: {
+            customProperties: false
+          }
+        }
+      }
+    },
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({

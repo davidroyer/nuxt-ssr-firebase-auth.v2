@@ -11,8 +11,8 @@
         <input id="passwordTxt" type="password" v-model="password">
         <button type="submit">Sign In</button>
       </form>
-      <button @click.prevent="fbGoogleLogin">Google Login</button>
-      <button @click.prevent="fbGoogleLogout">Google Logout</button>
+      <button class="button" @click.prevent="fbGoogleLogin">Google Login</button>
+      <button class="button" @click.prevent="fbGoogleLogout">Google Logout</button>
     </div>
   </section>
 </template>
@@ -40,13 +40,13 @@ export default {
       })
     },
     async fbGoogleLogin() {
-      const {user} = await firebaseApp.auth().signInWithPopup(googleProvider)
+      const { user } = await firebaseApp.auth().signInWithPopup(googleProvider)
       await this.login(user)
       this.$router.push('/protected')
     },
     async fbGoogleLogout() {
-      await firebaseApp.auth().signOut()
-      alert('Signed Out!')
+      await this.logout()
+      this.$router.push('/')
     }
   }
 }
@@ -67,7 +67,7 @@ export default {
     box-sizing: border-box;
   }
 
-  button {
+  /* button {
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -75,7 +75,7 @@ export default {
     border: none;
     cursor: pointer;
     width: 100%;
-  }
+  } */
 
   button:hover {
     opacity: 0.8;

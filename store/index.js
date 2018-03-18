@@ -7,7 +7,6 @@ export const actions = {
     if (req.session && req.session.userId) {
       console.log(`[STORE ACTION] found uid in session:${JSON.stringify(req.session.userId)}`)
       await dispatch('saveUID', req.session.userId)
-      // await dispatch('saveUSER', req.session.userId)
     }
   }
 
