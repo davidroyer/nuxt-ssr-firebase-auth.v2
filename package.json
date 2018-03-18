@@ -1,0 +1,36 @@
+{
+  "name": "nuxt-fireauth-v5",
+  "version": "1.0.0",
+  "description": "Nuxt.js and Firebase Authentication Example Application",
+  "author": "David Royer",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint",
+    "deploy:now": "now --public && now alias"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.0.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "firebase": "^4.9.1",
+    "jwt-decode": "^2.2.0",
+    "nuxt": "latest"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.15.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-vue": "^4.0.0"
+  },
+  "now": {
+    "name": "nuxt-fireauth-v5",
+    "alias": "nuxt-fireauth-v5.now.sh"
+  }
+}
