@@ -40,13 +40,9 @@ export default {
       })
     },
     async fbGoogleLogin() {
-      const result = await firebaseApp.auth().signInWithPopup(googleProvider)
-      console.log('Popup Result: ', result);
-      return this.login(result.user.uid).then(() => {
-        this.$router.push('/protected')
-      }).catch((error) => {
-        console.log(error.message)
-      })
+      const {user} = await firebaseApp.auth().signInWithPopup(googleProvider)
+      await this.login(user)
+      this.$router.push('/protected')
     },
     async fbGoogleLogout() {
       await firebaseApp.auth().signOut()

@@ -3,28 +3,14 @@ import jwtDecode from 'jwt-decode'
 export default function ({store, req}) {
   if (process.server && !store.getters['modules/user/isAuthenticated']) {
     let uid = getUserFromSession(req)
-    let user;
 
-    if (uid || !uid) {
-      const decodedTokenResult = getUserFromCookie(req)
-      user = decodedTokenResult
-      if (user) {
+    const user = getUserFromCookie(req)
+    if (user) {
+      store.dispatch('modules/user/saveUSER', {name: user.name, email: user.email, avatar: user.picture, uid: user.user_id})
+      store.dispatch('modules/user/saveUID', user.user_id)
+    }
 
-        store.dispatch('modules/user/saveUSER', {name: user.name, email: user.email, avatar: user.picture, uid: user.user_id})
-        store.dispatch('modules/user/saveUID', user.user_id)
-      }
-      console.log('DECODED TOKEN FROM COOKIE: ', decodedTokenResult);
-    }
-    if (uid) {
-      store.dispatch('modules/user/saveUID', uid)
-      // store.dispatch('modules/user/saveUSER', {name: user.name, email: user.email, avatar: user.picture, uid: user.user_id})
-    }
   }
-}
-
-function getUserFromSession (req) {
-  console.log('[CHECK-AUTH] - checking if user is stored in session')
-  return req.session ? req.session.userId : null
 }
 
 function getUserFromCookie (req) {
@@ -40,4 +26,9 @@ function getUserFromCookie (req) {
   if (!decodedToken) return
 
   return decodedToken
+}
+
+function getUserFromSession (req) {
+  console.log('[CHECK-AUTH] - checking if user is stored in session')
+  return req.session ? req.session.userId : null
 }

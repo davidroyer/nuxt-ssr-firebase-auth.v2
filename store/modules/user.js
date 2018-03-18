@@ -22,12 +22,11 @@ export const getters = {
 
 export const actions = {
 
-  async login({dispatch, state}, uid) {
+  async login({dispatch, state}, user) {
     console.log('[STORE ACTIONS] - login')
+    
     const token = await firebaseApp.auth().currentUser.getIdToken(true)
-
-    const {status} = await this.$axios.$post('/api/login', { uid: uid, token: token })
-    const user = firebaseApp.auth().currentUser
+    const {status} = await this.$axios.$post('/api/login', { uid: user.uid, token: token })
 
     const userInfo = {
       name: user.displayName,
@@ -37,7 +36,7 @@ export const actions = {
     }
 
     await dispatch('saveUSER', userInfo)
-    await dispatch('saveUID', uid)
+    await dispatch('saveUID', userInfo.uid)
     console.log('[STORE ACTIONS] - in login, response:', status)
 
   },
@@ -47,6 +46,7 @@ export const actions = {
     await firebaseApp.auth().signOut()
 
     await dispatch('saveUID', null)
+    await dispatch('saveUSER', null)
 
     const {status} = await this.$axios.post('/api/logout')
     console.log('[STORE ACTIONS] - in logout, response:', status)
