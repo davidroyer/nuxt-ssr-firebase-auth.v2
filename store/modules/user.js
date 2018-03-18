@@ -1,4 +1,5 @@
 import firebaseApp from '~/firebase/app'
+import Cookies from 'js-cookie'
 
 export const state = () => ({
   uid: null,
@@ -25,10 +26,7 @@ export const actions = {
 
   async login({dispatch, state}, user) {
     console.log('[STORE ACTIONS] - login')
-
     const token = await firebaseApp.auth().currentUser.getIdToken(true)
-    const {status} = await this.$axios.$post('/api/login', { uid: user.uid, token: token })
-
     const userInfo = {
       name: user.displayName,
       email: user.email,
@@ -36,21 +34,20 @@ export const actions = {
       uid: user.uid
     }
 
+    Cookies.set('access_token', token) // saving token in cookie for server rendering
     await dispatch('setUSER', userInfo)
-    // await dispatch('saveUID', userInfo.uid)
+    await dispatch('saveUID', userInfo.uid)
     console.log('[STORE ACTIONS] - in login, response:', status)
 
   },
 
-  async logout({dispatch}) {
+  async logout({commit, dispatch}) {
     console.log('[STORE ACTIONS] - logout')
     await firebaseApp.auth().signOut()
 
-    // await dispatch('saveUID', null)
-    await dispatch('setUSER', null)
-
-    const {status} = await this.$axios.post('/api/logout')
-    console.log('[STORE ACTIONS] - in logout, response:', status)
+    Cookies.remove('access_token');
+    commit('setUSER', null)
+    commit('saveUID', null)
   },
 
   saveUID({commit}, uid) {
@@ -60,7 +57,7 @@ export const actions = {
 
   setUSER({commit}, user) {
     commit('setUSER', user)
-    commit('saveUID', user.uid)
+
   }
 
 }
@@ -71,7 +68,6 @@ export const mutations = {
     state.uid = uid
   },
   setUSER (state, user) {
-    const {name, email, uid, avatar} = user
     console.log('[STORE MUTATIONS] - setUSER:', user)
     state.user = user
   }

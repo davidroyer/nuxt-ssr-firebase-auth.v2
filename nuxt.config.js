@@ -1,6 +1,3 @@
-const bodyParser = require('body-parser')
-const session = require('express-session')
-
 module.exports = {
   /*
   ** Headers of the page
@@ -84,15 +81,5 @@ module.exports = {
     proxy: {
       'api': 'https://nuxt-fireauth-v5.now.sh'
     }
-  },
-  serverMiddleware: [
-    bodyParser.json(),
-    session({
-      secret: 'davlaroykash',
-      resave: false,
-      saveUninitialized: false,
-      cookie: { maxAge: 60000, secure: false }
-    }),
-    '~/api'
-  ]
+  }
 }

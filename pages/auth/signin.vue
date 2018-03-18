@@ -28,6 +28,7 @@ export default {
       password: ''
     }
   },
+  middleware: ['handle-login-route'],
   methods: {
     ...mapActions('modules/user', [ 'login' ]),
     submit () {
