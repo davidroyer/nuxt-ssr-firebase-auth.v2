@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-fireauth-v5",
+  "name": "nuxt-ssr-firebase-auth-v2",
   "version": "1.0.0",
   "description": "Nuxt.js and Firebase Authentication Example Application",
   "author": "David Royer",

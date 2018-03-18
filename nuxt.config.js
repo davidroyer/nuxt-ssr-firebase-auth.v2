@@ -72,12 +72,13 @@ module.exports = {
       }
     }
   },
-  plugins: [
-    '~/plugins/auth.js'
-  ],
+
+  plugins: [],
+
   modules: [
     '@nuxtjs/axios'
   ],
+
   axios: {
     debug: true,
     proxy: {

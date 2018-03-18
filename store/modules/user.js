@@ -8,7 +8,8 @@ export const state = () => ({
 export const getters = {
 
   uid(state) {
-    return state.uid
+    if (state.user && state.user.uid) return state.user.uid
+    else return null
   },
 
   user(state) {
@@ -16,7 +17,7 @@ export const getters = {
   },
 
   isAuthenticated(state) {
-    return !!state.uid
+    return !!state.user && !!state.user.uid
   }
 }
 
@@ -24,7 +25,7 @@ export const actions = {
 
   async login({dispatch, state}, user) {
     console.log('[STORE ACTIONS] - login')
-    
+
     const token = await firebaseApp.auth().currentUser.getIdToken(true)
     const {status} = await this.$axios.$post('/api/login', { uid: user.uid, token: token })
 
@@ -35,8 +36,8 @@ export const actions = {
       uid: user.uid
     }
 
-    await dispatch('saveUSER', userInfo)
-    await dispatch('saveUID', userInfo.uid)
+    await dispatch('setUSER', userInfo)
+    // await dispatch('saveUID', userInfo.uid)
     console.log('[STORE ACTIONS] - in login, response:', status)
 
   },
@@ -45,8 +46,8 @@ export const actions = {
     console.log('[STORE ACTIONS] - logout')
     await firebaseApp.auth().signOut()
 
-    await dispatch('saveUID', null)
-    await dispatch('saveUSER', null)
+    // await dispatch('saveUID', null)
+    await dispatch('setUSER', null)
 
     const {status} = await this.$axios.post('/api/logout')
     console.log('[STORE ACTIONS] - in logout, response:', status)
@@ -57,9 +58,9 @@ export const actions = {
     commit('saveUID', uid)
   },
 
-  saveUSER({commit}, user) {
-    console.log('[STORE ACTIONS] - saveUSER')
-    commit('saveUSER', user)
+  setUSER({commit}, user) {
+    commit('setUSER', user)
+    commit('saveUID', user.uid)
   }
 
 }
@@ -69,8 +70,9 @@ export const mutations = {
     console.log('[STORE MUTATIONS] - saveUID:', uid)
     state.uid = uid
   },
-  saveUSER (state, user) {
-    console.log('[STORE MUTATIONS] - saveUSER:', user)
+  setUSER (state, user) {
+    const {name, email, uid, avatar} = user
+    console.log('[STORE MUTATIONS] - setUSER:', user)
     state.user = user
   }
 }

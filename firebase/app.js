@@ -13,6 +13,6 @@ const config = {
   messagingSenderId: env.FIREBASE.SENDER_ID
 }
 const googleProvider = new firebase.auth.GoogleAuthProvider()
-export default !firebase.apps.length ? firebase.initializeApp(config) : firebase.app()
 
-export {googleProvider} 
+export default !firebase.apps.length ? firebase.initializeApp(config) : firebase.app()
+export {googleProvider}
