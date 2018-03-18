@@ -84,9 +84,6 @@ module.exports = {
       'api': 'https://nuxt-fireauth-v5.now.sh'
     }
   },
-  router: {
-    middleware: 'check-auth'
-  },
   serverMiddleware: [
     bodyParser.json(),
     session({
