@@ -33,7 +33,7 @@ export default {
     ...mapActions('modules/user', [ 'login' ]),
     submit () {
       firebaseApp.auth().signInWithEmailAndPassword(this.email, this.password).then((firebaseUser) => {
-        return this.login(firebaseUser.uid)
+        return this.login(firebaseUser)
       }).then(() => {
         this.$router.push('/protected')
       }).catch((error) => {

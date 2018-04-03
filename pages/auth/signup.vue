@@ -33,7 +33,7 @@ export default {
       try {
         const firebaseUser = await firebaseApp.auth().createUserWithEmailAndPassword(this.email, this.password)
         await this.writeUserData(firebaseUser.uid, firebaseUser.email)
-        await this.login(firebaseUser.uid)
+        await this.login(firebaseUser)
         this.$router.push('/protected')
       } catch (error) {
         console.log(error.message)
@@ -82,4 +82,3 @@ export default {
   }
 
 </style>
-
