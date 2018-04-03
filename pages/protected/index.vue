@@ -7,7 +7,7 @@
       <div>
         User ID: {{ uid }}
       </div>
-      <h3>Current User: {{user.name}}</h3>
+      <h3>Current User: {{user.name||user.email}}</h3>
       <img v-if="user.avatar" :src="user.avatar" alt="">
       <div>
         All DB Users: {{ allusers }}
