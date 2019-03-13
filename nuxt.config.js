@@ -44,13 +44,13 @@ module.exports = {
     ** Run ESLint on save
     */
     postcss: {
-      plugins: {
-        'postcss-cssnext': {
-          features: {
-            customProperties: false
-          }
-        }
-      }
+      // plugins: {
+      //   'postcss-cssnext': {
+      //     features: {
+      //       customProperties: false
+      //     }
+      //   }
+      // }
     },
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
