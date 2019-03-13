@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "latest",
-    "body-parser": "^latest",
+    "body-parser": "latest",
     "cookieparser": "latest",
     "express": "latest",
     "express-session": "latest",
